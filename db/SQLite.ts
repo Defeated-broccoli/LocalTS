@@ -126,5 +126,14 @@ const deleteAlarm = async (alarm) => {
             )
           },
         )
-      })
+    })
+}
+
+export default {
+    openDbConnection,
+    getAlarms,
+    addAlarm,
+    updateAlarm,
+    deleteAlarm,
     }
+    
