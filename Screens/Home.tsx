@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import dbConnection from '../db/SQLite'
 import Alarm from '../Models/Alarm'
 import TitleComponent from '../Components/TitleComponent'
+import AlarmListComponent from '../Components/AlarmListComponent'
 
 const Home = ({navigation, route}) => {
     const [alarms, setAlarms] = useState<Alarm[]>([])
@@ -29,6 +30,31 @@ const Home = ({navigation, route}) => {
             height: '100%'
         }}>
             <TitleComponent />
+            <AlarmListComponent
+                alarms={alarms}
+                onEditClick={(alarm) => {
+                    navigation.navigate('EditAlarm', {alarm})
+                }}
+                onDeleteClick={(alarm) => {handleAlarmDelete(alarm)}}
+            />
+            <Button 
+                title={'Add new alarm'}
+                onPress={() => {
+                    navigation.navigate('EditAlarm', {
+                        alarm: {
+                            id: null,
+                            title: null,
+                            description: null,
+                            rangeKm: null,
+                            lat: null,
+                            lon: null,
+                            isActive: true,
+                            isOneTime: false
+                        }
+                    })
+                }}
+            
+            />
         </SafeAreaView>
     </>
     )
