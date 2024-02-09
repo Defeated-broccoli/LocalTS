@@ -13,6 +13,7 @@ import {
 import Home from './Screens/Home'
 import EditAlarm from './Screens/EditAlarm'
 import { RootStackParamList } from './NavigationProps/NavProps'
+import EditMapAlarm from './Screens/EditMapAlarm'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -35,6 +36,7 @@ export default function App() {
         >
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="EditAlarm" component={EditAlarm} />
+          <Stack.Screen name="EditMapAlarm" component={EditMapAlarm} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

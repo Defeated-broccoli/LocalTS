@@ -1,6 +1,6 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import Alarm from '../Models/Alarm'
+import { Alarm } from '../Models/Alarm'
 
 type RootStackParamList = {
   Home: undefined

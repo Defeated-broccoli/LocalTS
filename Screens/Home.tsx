@@ -3,7 +3,7 @@ import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
 
 import dbConnection from '../db/SQLite'
-import Alarm from '../Models/Alarm'
+import { Alarm, AlarmLocation } from '../Models/Alarm'
 import TitleComponent from '../Components/TitleComponent'
 import AlarmListComponent from '../Components/AlarmListComponent'
 import {
@@ -23,7 +23,10 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
   useEffect(() => {
     dbConnection
       .getAlarms()
-      .then((result) => setAlarms(result))
+      .then((result) => {
+        setAlarms(result)
+        console.log(result)
+      })
       .catch((error) => console.log(error))
   }, [isFocused])
 
@@ -60,16 +63,7 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
           title={'Add new alarm'}
           onPress={() => {
             navigation.navigate('EditAlarm', {
-              alarm: {
-                id: null,
-                title: null,
-                description: null,
-                rangeKm: null,
-                lat: null,
-                lon: null,
-                isActive: true,
-                isOneTime: false,
-              },
+              alarm: null,
             })
           }}
         />
