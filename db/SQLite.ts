@@ -108,7 +108,7 @@ const updateAlarm = async (alarm: Alarm): Promise<DatabaseResult>  => {
     })
 }
 
-const deleteAlarm = async (alarm) => {
+const deleteAlarm = async (alarm: Alarm) => {
     const db = openDbConnection()
     
     return new Promise((resolve: (value: unknown) => void, reject: (reason?: any) => void) => {
