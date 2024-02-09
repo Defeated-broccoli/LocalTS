@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 
 import dbConnection from '../db/SQLite'
 import Alarm from '../Models/Alarm'
+import TitleComponent from '../Components/TitleComponent'
 
 const Home = ({navigation, route}) => {
     const [alarms, setAlarms] = useState<Alarm[]>([])
@@ -27,7 +28,7 @@ const Home = ({navigation, route}) => {
             flexDirection: 'column',
             height: '100%'
         }}>
-            
+            <TitleComponent />
         </SafeAreaView>
     </>
     )

@@ -18,7 +18,7 @@ const theme = {
 export default function App() {
   return (
     <>
-      <StatusBar/>
+      {/* <StatusBar style={'auto'} hidden={true}/> */}
       <NavigationContainer theme={theme}>
         <Stack.Navigator
           screenOptions={{ headerShown: false }}
