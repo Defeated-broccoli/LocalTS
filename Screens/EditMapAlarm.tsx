@@ -24,54 +24,23 @@ type EditMapAlarmProp = {
   navigation: EditMapAlarmScreenNavigationProp
 }
 
-interface MapLocation extends AlarmLocation {
-  latDelta: number
-  lonDelta: number
-}
-
 const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
   const [alarm, setAlarm] = useState<Alarm>(route.params.alarm)
-  const [mapLocation, setMapLocation] = useState<MapLocation>({
-    ...route.params.alarm?.location,
-    latDelta: 0.0822,
-    lonDelta: 0.0421,
-  })
-  const [range, setRange] = useState(
-    route.params.alarm?.location?.rangeKm ?? 0.5
-  )
-  const [refresh, setRefresh] = useState(0)
 
   useEffect(() => {
-    if (alarm?.location != null) {
+    console.log(alarm)
+
+    if (alarm.location?.lat == null) {
       getInitialRegion()
-        .then((loc) => {
-          setMapLocation({
-            ...loc,
-            latDelta: 0.0822,
-            lonDelta: 0.0421,
-          })
+        .then((result) => {
+          setAlarm((prev) => ({
+            ...prev,
+            location: result,
+          }))
         })
-        .catch((e) => {
-          console.log(e)
-        })
-    } else {
-      setMapLocation({
-        ...alarm.location,
-        latDelta: 0.0822,
-        lonDelta: 0.0421,
-      })
+        .catch((e) => console.log(e))
     }
-    setRefresh((prev) => prev + 1)
   }, [])
-
-  useEffect(() => {
-    setAlarm((prev) => ({
-      ...prev,
-      rangeKm: range,
-      lat: mapLocation?.lat,
-      lon: mapLocation?.lon,
-    }))
-  }, [refresh])
 
   const getInitialRegion = async (): Promise<AlarmLocation> => {
     return new Promise(async (resolve, reject) => {
@@ -83,12 +52,17 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
 
       const loc = await Location.getLastKnownPositionAsync()
 
-      resolve({ lat: loc.coords.latitude, lon: loc.coords.longitude })
+      resolve({
+        lat: loc?.coords?.latitude ?? 0,
+        lon: loc?.coords?.longitude ?? 0,
+        latDelta: 1,
+        lonDelta: 1,
+      })
     })
   }
 
   const handleSaveButton = () => {
-    if (alarm.id === null) {
+    if (alarm.id == null) {
       dbConnection
         .addAlarm(alarm)
         .then((result) => {
@@ -113,7 +87,7 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
 
   return (
     <SafeAreaView>
-      {mapLocation && (
+      {alarm?.location?.lat != null && (
         <>
           <View
             style={{
@@ -126,30 +100,31 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
             <MapView
               style={{ width: '100%', flexGrow: 1 }}
               initialRegion={{
-                latitude: mapLocation.lat,
-                longitude: mapLocation.lon,
-                latitudeDelta: mapLocation.latDelta,
-                longitudeDelta: mapLocation.lonDelta,
+                latitude: alarm.location?.lat,
+                longitude: alarm.location?.lon,
+                latitudeDelta: alarm.location?.latDelta,
+                longitudeDelta: alarm.location?.lonDelta,
               }}
-              onRegionChange={(e) => {
-                setMapLocation({
-                  ...mapLocation,
-                  lat: e.latitude,
-                  lon: e.longitude,
-                  latDelta: e.latitudeDelta,
-                  lonDelta: e.longitudeDelta,
-                })
+              onRegionChange={(region) => {
+                setAlarm((prev) => ({
+                  ...prev,
+                  location: {
+                    lat: region.latitude,
+                    lon: region.longitude,
+                    latDelta: region.latitudeDelta,
+                    lonDelta: region.longitudeDelta,
+                    rangeKm: prev.location?.rangeKm,
+                  },
+                }))
               }}
-              onRegionChangeComplete={() => {
-                setRefresh((prev) => prev + 1)
-              }}
+              onRegionChangeComplete={() => {}}
             >
               <Circle
                 center={{
-                  latitude: mapLocation.lat,
-                  longitude: mapLocation.lon,
+                  latitude: alarm.location?.lat,
+                  longitude: alarm.location?.lon,
                 }}
-                radius={mapLocation?.rangeKm ?? 0 * 1000}
+                radius={(alarm.location?.rangeKm ?? 0.5) * 1000}
                 strokeWidth={1}
                 strokeColor={'#1a66ff'}
                 fillColor={'rgba(220,238,255,0.5)'}
@@ -171,7 +146,7 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
                   marginLeft: 20,
                 }}
               >
-                {range}km
+                {alarm.location?.rangeKm}km
               </Text>
               <MultiSlider
                 containerStyle={{
@@ -180,12 +155,17 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
                 min={0.5}
                 max={50}
                 step={0.1}
-                onValuesChange={(value) => {
-                  setRange(Math.round(value[0] * 10) / 10)
+                onValuesChange={(range) => {
+                  setAlarm((prev) => ({
+                    ...prev,
+                    location: {
+                      ...prev.location,
+                      rangeKm: Math.round(range[0] * 10) / 10,
+                    },
+                  }))
                 }}
-                onValuesChangeFinish={(value) => {
-                  setRefresh((prev) => prev + 1)
-                }}
+                onValuesChangeFinish={(value) => {}}
+                values={[alarm.location?.rangeKm]}
               />
             </View>
             <TouchableOpacity
@@ -214,7 +194,7 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
         </>
       )}
 
-      {!mapLocation && <Text>Loading...</Text>}
+      {alarm?.location?.lat == null && <Text>Loading...</Text>}
     </SafeAreaView>
   )
 }

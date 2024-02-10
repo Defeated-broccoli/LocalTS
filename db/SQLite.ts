@@ -46,6 +46,9 @@ const getAlarms = async (): Promise<Alarm[]> => {
                   location: {
                     lat: row.lat,
                     lon: row.lon,
+                    latDelta: 1,
+                    lonDelta: 1,
+                    rangeKm: row.rangeKm,
                   },
                   isActive: row.isActive,
                   isOneTime: row.isOneTime,

@@ -22,7 +22,15 @@ type EditAlarmProps = {
 }
 
 const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
-  const [alarm, setAlarm] = useState(route.params.alarm)
+  const [alarm, setAlarm] = useState<Alarm>(
+    route.params.alarm ?? {
+      title: 'Title example',
+      description: 'Desc example',
+      location: {},
+      isActive: true,
+      isOneTime: false,
+    }
+  )
 
   const panResponder = useRef(
     PanResponder.create({
@@ -74,6 +82,7 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
             onChangeText={(e) => {
               handleAlarmChange(e, 'title')
             }}
+            value={alarm?.title}
           />
         </View>
         <View>
@@ -139,7 +148,7 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
                 onValueChange={(value) => {
                   handleAlarmChange(value, 'isActive')
                 }}
-                value={alarm?.isActive ?? true}
+                value={alarm?.isActive == true}
               />
             </View>
           </View>
@@ -168,7 +177,7 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
                 onValueChange={(value) => {
                   handleAlarmChange(value, 'isOneTime')
                 }}
-                value={alarm?.isOneTime ?? false}
+                value={alarm?.isOneTime == true}
               />
             </View>
           </View>
@@ -177,7 +186,6 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
           <Button
             title="next"
             onPress={() => {
-              console.log(alarm)
               navigation.navigate('EditMapAlarm', { alarm })
             }}
           />
