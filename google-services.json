@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "166509462044",
+    "project_id": "localts-9ca1b",
+    "storage_bucket": "localts-9ca1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166509462044:android:8f13b8a521f9f794bc15d9",
+        "android_client_info": {
+          "package_name": "com.kitkat62.localts"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_I-1WaWu44DgHMoNUmKggMIMyEN7UFLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
