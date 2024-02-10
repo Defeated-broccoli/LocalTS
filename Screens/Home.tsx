@@ -10,6 +10,8 @@ import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
 } from '../NavigationProps/NavProps'
+import BackgroundTaskComponent from '../BackgroundTask/BackgroundTaskComponent'
+import NotificationComponent from '../BackgroundTask/NotificationComponent'
 
 type HomeProps = {
   route: HomeScreenRouteProp
@@ -67,6 +69,7 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
             })
           }}
         />
+        <NotificationComponent showButtons={false} />
       </SafeAreaView>
     </>
   )
