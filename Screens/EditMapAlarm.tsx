@@ -146,7 +146,7 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
                   marginLeft: 20,
                 }}
               >
-                {alarm.location?.rangeKm}km
+                {alarm.location?.rangeKm ?? 0.5}km
               </Text>
               <MultiSlider
                 containerStyle={{
@@ -165,7 +165,7 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
                   }))
                 }}
                 onValuesChangeFinish={(value) => {}}
-                values={[alarm.location?.rangeKm]}
+                values={[alarm.location?.rangeKm ?? 0.5]}
               />
             </View>
             <TouchableOpacity

@@ -13,7 +13,7 @@ const openDbConnection = (): SQLite.SQLiteDatabase => {
 
   db.transaction((tx) => {
     tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS alarms (id INTEGER PRIMARY KEY NOT NULL,title TEXT,description TEXT,rangeKm REAL,lat REAL,lon REAL, isActive BOOLEAN, isOneTime BOOLEAN );`,
+      `CREATE TABLE IF NOT EXISTS alarms (id INTEGER PRIMARY KEY NOT NULL,title TEXT,description TEXT,rangeKm REAL,lat REAL,lon REAL, latDelta REAL, lonDelta REAL, isActive BOOLEAN, isOneTime BOOLEAN );`,
       [],
       (_, result) => {
         //console.log('Table created: ', result)
@@ -46,8 +46,8 @@ const getAlarms = async (): Promise<Alarm[]> => {
                   location: {
                     lat: row.lat,
                     lon: row.lon,
-                    latDelta: 1,
-                    lonDelta: 1,
+                    latDelta: row.latDelta,
+                    lonDelta: row.lonDelta,
                     rangeKm: row.rangeKm,
                   },
                   isActive: row.isActive,
@@ -71,13 +71,15 @@ const addAlarm = async (alarm: Alarm): Promise<DatabaseResult> => {
   return new Promise((resolve, reject: (dbResult: DatabaseResult) => void) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'insert into alarms (title, description, rangeKm, lat, lon, isActive, isOneTime) values (?, ?, ?, ?, ?, ?, ?)',
+        'insert into alarms (title, description, rangeKm, lat, lon, latDelta, lonDelta, isActive, isOneTime) values (?, ?, ?, ?, ?, ?, ?, ?, ?)',
         [
           alarm.title,
           alarm.description,
           alarm.location?.rangeKm,
           alarm.location?.lat,
           alarm.location?.lon,
+          alarm.location?.latDelta,
+          alarm.location?.lonDelta,
           alarm.isActive ? 1 : 0,
           alarm.isOneTime ? 1 : 0,
         ],
@@ -100,13 +102,15 @@ const updateAlarm = async (alarm: Alarm): Promise<DatabaseResult> => {
     (resolve: (value: unknown) => void, reject: (reason?: any) => void) => {
       db.transaction((tx) => {
         tx.executeSql(
-          'update alarms set title = ?, description = ?, rangeKm = ?, lat = ?, lon = ?, isActive = ?, isOneTime = ? where id = ?',
+          'update alarms set title = ?, description = ?, rangeKm = ?, lat = ?, lon = ?, latDelta = ?, lonDelta = ?, isActive = ?, isOneTime = ? where id = ?',
           [
             alarm.title,
             alarm.description,
             alarm.location?.rangeKm,
             alarm.location?.lat,
             alarm.location?.lon,
+            alarm.location?.latDelta,
+            alarm.location?.lonDelta,
             alarm.isActive ? 1 : 0,
             alarm.isOneTime ? 1 : 0,
             alarm.id,
