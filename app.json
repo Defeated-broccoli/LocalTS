@@ -4,7 +4,7 @@
     "slug": "loc-al-ts",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/local-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -27,7 +27,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-},
+    },
+     "plugins": [
+      [
+        "expo-notifications",
+        {
+          "color": "#ffffff"
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "2f834c69-56ed-43bc-9ecb-31a9eafb0f03"

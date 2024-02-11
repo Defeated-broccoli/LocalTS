@@ -10,8 +10,11 @@ import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
 } from '../NavigationProps/NavProps'
-import BackgroundTaskComponent from '../BackgroundTask/BackgroundTaskComponent'
-import NotificationComponent from '../BackgroundTask/NotificationComponent'
+import { startBackgroundTask } from '../BackgroundTask/BackgroundTask'
+import {
+  registerForPushNotificationsAsync,
+  scheduleTestNotification,
+} from '../BackgroundTask/PushNotification'
 
 type HomeProps = {
   route: HomeScreenRouteProp
@@ -27,10 +30,24 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
       .getAlarms()
       .then((result) => {
         setAlarms(result)
-        console.log(result)
       })
       .catch((error) => console.log(error))
   }, [isFocused])
+
+  useEffect(() => {
+    setupBackgroundTask()
+  }, [])
+
+  const setupBackgroundTask = async () => {
+    if (
+      (await registerForPushNotificationsAsync()) &&
+      (await startBackgroundTask())
+    ) {
+      // scheduleTestNotification().then((result) =>
+      //   console.log(`Test notification id: ${result}`)
+      // )
+    }
+  }
 
   const handleAlarmDelete = (alarm: Alarm) => {
     setAlarms((prev) => {
@@ -69,7 +86,6 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
             })
           }}
         />
-        <NotificationComponent showButtons={false} />
       </SafeAreaView>
     </>
   )
