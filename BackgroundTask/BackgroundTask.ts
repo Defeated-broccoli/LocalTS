@@ -96,7 +96,9 @@ const locationTaskAsync = async () => {
 
   //getCurrentPositionAsync() takes long time to load and crashes often
   //getLastKnownPosition() often returns null
-  Location.getCurrentPositionAsync()
+  Location.getCurrentPositionAsync({
+    accuracy: Location.Accuracy.Low
+  })
     .then((loc) => {
       console.log(loc)
       dbConnection
