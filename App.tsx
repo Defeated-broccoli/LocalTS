@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar'
 
 import {
   NavigationContainer,
@@ -14,6 +13,7 @@ import Home from './Screens/Home'
 import EditAlarm from './Screens/EditAlarm'
 import { RootStackParamList } from './NavigationProps/NavProps'
 import EditMapAlarm from './Screens/EditMapAlarm'
+import { SafeAreaView, StatusBar } from 'react-native'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -28,7 +28,8 @@ const theme = {
 export default function App() {
   return (
     <>
-      {/* <StatusBar style={'auto'} backgroundColor="lightblue" hidden={true} /> */}
+    <SafeAreaView style={{flex: 1}}>
+    <StatusBar backgroundColor={'pink'} />
       <NavigationContainer theme={theme}>
         <Stack.Navigator
           screenOptions={{ headerShown: false }}
@@ -39,6 +40,7 @@ export default function App() {
           <Stack.Screen name="EditMapAlarm" component={EditMapAlarm} />
         </Stack.Navigator>
       </NavigationContainer>
+      </SafeAreaView>
     </>
   )
 }

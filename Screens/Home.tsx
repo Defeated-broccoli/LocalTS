@@ -68,7 +68,6 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
   }
 
   return (
-    <>
       <SafeAreaView
         style={{
           display: 'flex',
@@ -95,7 +94,6 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
           }}
         />
       </SafeAreaView>
-    </>
   )
 }
 
