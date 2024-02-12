@@ -39,14 +39,22 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
   }, [])
 
   const setupBackgroundTask = async () => {
-    if (
-      (await registerForPushNotificationsAsync()) &&
-      (await startBackgroundTask())
-    ) {
-      // scheduleTestNotification().then((result) =>
-      //   console.log(`Test notification id: ${result}`)
-      // )
-    }
+      registerForPushNotificationsAsync().then(result => {
+        if(!result)
+          console.log('Push notification register failed')
+        // else {
+        //   scheduleTestNotification()
+        // }
+      }).catch(e => {
+        console.log('Push notification failed', e)
+      })
+
+      startBackgroundTask().then(result => {
+        if(!result)
+          console.log('Failed on starting background task')
+      }).catch(e => {
+        console.log('Failed on starting background task', e)
+      })
   }
 
   const handleAlarmDelete = (alarm: Alarm) => {
