@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Button } from 'react-native'
+import { View, Text, SafeAreaView, Button, StyleSheet } from 'react-native'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
 
@@ -15,6 +15,9 @@ import {
   registerForPushNotificationsAsync,
   scheduleTestNotification,
 } from '../BackgroundTask/PushNotification'
+import TopBarComponent from '../Components/TopBarComponent'
+
+
 
 type HomeProps = {
   route: HomeScreenRouteProp
@@ -69,13 +72,9 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
 
   return (
       <SafeAreaView
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-        }}
+        style={styles.main}
       >
-        <TitleComponent />
+        <TopBarComponent navigation={navigation} />        
         <AlarmListComponent
           alarms={alarms}
           onEditClick={(alarm) => {
@@ -96,5 +95,13 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
       </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  main: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%'
+    }
+})
 
 export default Home

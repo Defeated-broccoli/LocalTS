@@ -9,11 +9,12 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack'
 
-import Home from './Screens/Home'
 import EditAlarm from './Screens/EditAlarm'
 import { RootStackParamList } from './NavigationProps/NavProps'
 import EditMapAlarm from './Screens/EditMapAlarm'
 import { SafeAreaView, StatusBar } from 'react-native'
+import Home from './Screens/Home'
+import TopBarComponent from './Components/TopBarComponent'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -28,8 +29,7 @@ const theme = {
 export default function App() {
   return (
     <>
-    <SafeAreaView style={{flex: 1}}>
-    <StatusBar backgroundColor={'pink'} />
+      <StatusBar backgroundColor={'pink'} />
       <NavigationContainer theme={theme}>
         <Stack.Navigator
           screenOptions={{ headerShown: false }}
@@ -40,7 +40,6 @@ export default function App() {
           <Stack.Screen name="EditMapAlarm" component={EditMapAlarm} />
         </Stack.Navigator>
       </NavigationContainer>
-      </SafeAreaView>
     </>
   )
 }

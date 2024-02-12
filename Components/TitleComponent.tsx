@@ -1,26 +1,42 @@
-import { View, Text } from "react-native"
+import { View, Text, StyleSheet, Image, ViewStyle, TextStyle, ImageStyle } from "react-native"
 
-interface TitleComponentArgs {
-    title?: string
+interface TitleComponentProp {
+    containerStyle?: ViewStyle,
+    textStyle?: TextStyle,
+    imageStyle?: ImageStyle
 }
 
-const TitleComponent = (args: TitleComponentArgs) => {
+const TitleComponent = ({containerStyle, textStyle, imageStyle}: TitleComponentProp) => {
   return (
     <View
-      style={{
-        margin: 10,
-      }}
+      style={{...styles.containerStyle, ...containerStyle}}
     >
-      <Text
-        style={{
-          fontSize: 32,
-          fontWeight: 'bold',
-        }}
-      >
-        {args.title ?? 'LocAl'}
-      </Text>
+      <Text style={{...styles.textStyle, ...textStyle}}>L</Text>
+      <Image style={{...styles.imageStyle, ...imageStyle}} source={require('../assets/local-icon.png')}/>
+      <Text style={{...styles.textStyle, ...textStyle}}>cal</Text>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  containerStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center'
+  },
+  textStyle: {
+    fontWeight: 'bold',
+    fontSize: 40,
+  },
+  imageStyle: {
+    width: 26,
+    height: 26,
+    marginTop: 8
+  }
+
+})
+
 
 export default TitleComponent

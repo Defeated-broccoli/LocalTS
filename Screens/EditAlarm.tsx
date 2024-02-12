@@ -15,6 +15,7 @@ import {
   Button,
 } from 'react-native'
 import { Alarm } from '../Models/Alarm'
+import TopBarComponent from '../Components/TopBarComponent'
 
 type EditAlarmProps = {
   route: EditAlarmScreenRouteProp
@@ -56,6 +57,7 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
       <SafeAreaView
         style={{ height: '100%' }} /*{...panResponder.panHandlers}*/
       >
+        <TopBarComponent navigation={navigation}/>
         <View>
           <Text
             style={{

@@ -18,6 +18,7 @@ import {
   EditMapAlarmScreenRouteProp,
 } from '../NavigationProps/NavProps'
 import { Alarm, AlarmLocation } from '../Models/Alarm'
+import TopBarComponent from '../Components/TopBarComponent'
 
 type EditMapAlarmProp = {
   route: EditMapAlarmScreenRouteProp
