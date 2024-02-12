@@ -1,4 +1,5 @@
 import { View, Text } from "react-native"
+import style from 'index.css'
 
 interface TitleComponentArgs {
     title?: string
