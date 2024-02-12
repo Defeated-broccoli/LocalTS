@@ -2,19 +2,19 @@ import { View, Text, SafeAreaView, Button } from 'react-native'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
 
-import dbConnection from '../../db/SQLite'
-import { Alarm, AlarmLocation } from '../../Models/Alarm'
-import AlarmListComponent from '../../Components/AlarmListComponent/AlarmListComponent'
+import dbConnection from '../db/SQLite'
+import { Alarm, AlarmLocation } from '../Models/Alarm'
+import TitleComponent from '../Components/TitleComponent'
+import AlarmListComponent from '../Components/AlarmListComponent'
 import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
-} from '../../NavigationProps/NavProps'
-import { startBackgroundTask } from '../../BackgroundTask/BackgroundTask'
+} from '../NavigationProps/NavProps'
+import { startBackgroundTask } from '../BackgroundTask/BackgroundTask'
 import {
   registerForPushNotificationsAsync,
   scheduleTestNotification,
-} from '../../BackgroundTask/PushNotification'
-import TitleComponent from '../../Components/TitleComponent/TitleComponent'
+} from '../BackgroundTask/PushNotification'
 
 type HomeProps = {
   route: HomeScreenRouteProp

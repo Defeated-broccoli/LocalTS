@@ -9,10 +9,10 @@ import {
   createStackNavigator,
 } from '@react-navigation/stack'
 
-import Home from './Screens/Home/Home'
-import EditAlarm from './Screens/EditAlarm/EditAlarm'
+import Home from './Screens/Home'
+import EditAlarm from './Screens/EditAlarm'
 import { RootStackParamList } from './NavigationProps/NavProps'
-import EditMapAlarm from './Screens/EditMapAlarm/EditMapAlarm'
+import EditMapAlarm from './Screens/EditMapAlarm'
 import { SafeAreaView, StatusBar } from 'react-native'
 
 const Stack = createStackNavigator<RootStackParamList>()

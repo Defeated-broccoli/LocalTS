@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { View, Text } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
-import {Alarm} from "../../Models/Alarm"
+import Alarm from "../Models/Alarm"
 
 interface AlarmItemComponentsProps {
     alarm: Alarm,
@@ -55,7 +55,7 @@ const AlarmItemComponent = ({ alarm, onEditClick, onDeleteClick }: AlarmItemComp
               fontWeight: 'bold',
             }}
           >
-            {alarm?.location?.rangeKm} km
+            {alarm.rangeKm} km
           </Text>
         </View>
       </View>

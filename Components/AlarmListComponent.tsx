@@ -1,6 +1,6 @@
 import { FlatList } from "react-native-gesture-handler"
-import { Alarm } from "../../Models/Alarm"
-import AlarmItemComponent from "../AlarmItemComponent/AlarmItemComponent"
+import Alarm from "../Models/Alarm"
+import AlarmItemComponent from "./AlarmItemComponent"
 
 interface AlarmListComponentProps {
     alarms: Alarm[],

@@ -4,7 +4,7 @@ import {
   EditAlarmScreenNavigationProp,
   EditAlarmScreenRouteProp,
   RootStackParamList,
-} from '../../NavigationProps/NavProps'
+} from '../NavigationProps/NavProps'
 import {
   PanResponder,
   View,
@@ -14,7 +14,7 @@ import {
   Switch,
   Button,
 } from 'react-native'
-import { Alarm } from '../../Models/Alarm'
+import { Alarm } from '../Models/Alarm'
 
 type EditAlarmProps = {
   route: EditAlarmScreenRouteProp
