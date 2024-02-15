@@ -2,7 +2,7 @@ import { View, Text, SafeAreaView, Button, StyleSheet } from 'react-native'
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
 
-import dbConnection from '../db/SQLite'
+import dbConnection from '../Db/SQLite'
 import { Alarm, AlarmLocation } from '../Models/Alarm'
 import TitleComponent from '../Components/TitleComponent'
 import AlarmListComponent from '../Components/AlarmListComponent'
@@ -16,6 +16,7 @@ import {
   scheduleTestNotification,
 } from '../BackgroundTask/PushNotification'
 import TopBarComponent from '../Components/TopBarComponent'
+import DefaultButton from '../Components/DefaultButton'
 
 
 
@@ -72,10 +73,11 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
 
   return (
       <SafeAreaView
-        style={styles.main}
+        style={styles.home}
       >
-        <TopBarComponent navigation={navigation} />        
+        <TopBarComponent navigation={navigation} /> 
         <AlarmListComponent
+        alarmListStyle={styles.alarmListComponent}
           alarms={alarms}
           onEditClick={(alarm) => {
             navigation.navigate('EditAlarm', { alarm })
@@ -84,24 +86,31 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
             handleAlarmDelete(alarm)
           }}
         />
-        <Button
+        <DefaultButton 
+        defaultButtonStyle={styles.defaultButtonComponent}
           title={'Add new alarm'}
           onPress={() => {
             navigation.navigate('EditAlarm', {
               alarm: null,
             })
           }}
-        />
+        />    
       </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  main: {
+  home: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%'
-    }
+  },
+  alarmListComponent: {
+   flexGrow: 1
+  },
+  defaultButtonComponent: {
+    
+  }
 })
 
 export default Home
