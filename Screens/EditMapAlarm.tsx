@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import {
   Button,
   SafeAreaView,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -19,6 +20,7 @@ import {
 } from '../NavigationProps/NavProps'
 import { Alarm, AlarmLocation } from '../Models/Alarm'
 import TopBarComponent from '../Components/TopBarComponent'
+import DefaultButton from '../Components/DefaultButton'
 
 type EditMapAlarmProp = {
   route: EditMapAlarmScreenRouteProp
@@ -87,117 +89,119 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
   }
 
   return (
-    <SafeAreaView>
+    <>
       {alarm?.location?.lat != null && (
-        <>
-          <View
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
+        <SafeAreaView
+          style={styles.editMapAlarm}
+        >
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: alarm.location?.lat,
+              longitude: alarm.location?.lon,
+              latitudeDelta: alarm.location?.latDelta,
+              longitudeDelta: alarm.location?.lonDelta,
             }}
+            onRegionChange={(region) => {
+              setAlarm((prev) => ({
+                ...prev,
+                location: {
+                  lat: region.latitude,
+                  lon: region.longitude,
+                  latDelta: region.latitudeDelta,
+                  lonDelta: region.longitudeDelta,
+                  rangeKm: prev.location?.rangeKm,
+                },
+              }))
+            }}
+            onRegionChangeComplete={() => {}}
           >
-            <MapView
-              style={{ width: '100%', flexGrow: 1 }}
-              initialRegion={{
+            <Circle
+              center={{
                 latitude: alarm.location?.lat,
                 longitude: alarm.location?.lon,
-                latitudeDelta: alarm.location?.latDelta,
-                longitudeDelta: alarm.location?.lonDelta,
               }}
-              onRegionChange={(region) => {
+              radius={(alarm.location?.rangeKm ?? 0.5) * 1000}
+              strokeWidth={1}
+              strokeColor={'#1a66ff'}
+              fillColor={'rgba(220,238,255,0.5)'}
+            />
+          </MapView>
+          <View style={styles.bottomContainer}>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignContent: 'center',
+            }}
+          >
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 16,
+                marginTop: 5,
+                marginLeft: 20,
+              }}
+            >
+              {alarm.location?.rangeKm ?? 0.5}km
+            </Text>
+            <MultiSlider
+              containerStyle={{
+                alignSelf: 'center',
+              }}
+              min={0.5}
+              max={50}
+              step={0.1}
+              onValuesChange={(range) => {
                 setAlarm((prev) => ({
                   ...prev,
                   location: {
-                    lat: region.latitude,
-                    lon: region.longitude,
-                    latDelta: region.latitudeDelta,
-                    lonDelta: region.longitudeDelta,
-                    rangeKm: prev.location?.rangeKm,
+                    ...prev.location,
+                    rangeKm: Math.round(range[0] * 10) / 10,
                   },
                 }))
               }}
-              onRegionChangeComplete={() => {}}
-            >
-              <Circle
-                center={{
-                  latitude: alarm.location?.lat,
-                  longitude: alarm.location?.lon,
-                }}
-                radius={(alarm.location?.rangeKm ?? 0.5) * 1000}
-                strokeWidth={1}
-                strokeColor={'#1a66ff'}
-                fillColor={'rgba(220,238,255,0.5)'}
-              />
-            </MapView>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignContent: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: 16,
-                  marginTop: 5,
-                  marginLeft: 20,
-                }}
-              >
-                {alarm.location?.rangeKm ?? 0.5}km
-              </Text>
-              <MultiSlider
-                containerStyle={{
-                  alignSelf: 'center',
-                }}
-                min={0.5}
-                max={50}
-                step={0.1}
-                onValuesChange={(range) => {
-                  setAlarm((prev) => ({
-                    ...prev,
-                    location: {
-                      ...prev.location,
-                      rangeKm: Math.round(range[0] * 10) / 10,
-                    },
-                  }))
-                }}
-                onValuesChangeFinish={(value) => {}}
-                values={[alarm.location?.rangeKm ?? 0.5]}
-              />
-            </View>
-            <TouchableOpacity
-              style={{
-                margin: 10,
-                padding: 10,
-                backgroundColor: 'blue',
-                borderRadius: 10,
-              }}
-              onPress={() => {
-                handleSaveButton()
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                  fontSize: 16,
-                  color: 'white',
-                }}
-              >
-                Save
-              </Text>
-            </TouchableOpacity>
+              onValuesChangeFinish={(value) => {}}
+              values={[alarm.location?.rangeKm ?? 0.5]}
+            />
           </View>
-        </>
+          <DefaultButton
+            title='save'
+            onPress={() => {
+              handleSaveButton()
+            }}
+          />
+          </View>
+        </SafeAreaView>
       )}
 
       {alarm?.location?.lat == null && <Text>Loading...</Text>}
-    </SafeAreaView>
+      </>
   )
 }
+
+const styles = StyleSheet.create({
+  editMapAlarm: {
+    flex: 1,
+  },
+  map: {
+     width: '100%', 
+     flexGrow: 1 
+  },
+  bottomContainer: {
+    position: 'absolute',
+    bottom: 0,
+    margin: 10,
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    alignSelf: 'center',
+    width: '94%',
+    zIndex: 5
+  },
+
+})
 
 export default EditMapAlarm
