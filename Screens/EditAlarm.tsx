@@ -13,9 +13,11 @@ import {
   SafeAreaView,
   Switch,
   Button,
+  StyleSheet,
 } from 'react-native'
 import { Alarm } from '../Models/Alarm'
 import TopBarComponent from '../Components/TopBarComponent'
+import DefaultButton from '../Components/DefaultButton'
 
 type EditAlarmProps = {
   route: EditAlarmScreenRouteProp
@@ -55,28 +57,17 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
   return (
     <>
       <SafeAreaView
-        style={{ height: '100%' }} /*{...panResponder.panHandlers}*/
+        style={styles.editAlarm} 
       >
         <TopBarComponent navigation={navigation}/>
-        <View>
+        <View style={styles.inputContainer}>
           <Text
-            style={{
-              marginTop: 10,
-              marginLeft: 20,
-              fontWeight: 'bold',
-            }}
+            style={styles.labelText}
           >
             Title
           </Text>
           <TextInput
-            style={{
-              margin: 10,
-              marginTop: 5,
-              borderWidth: 1,
-              borderRadius: 10,
-              padding: 10,
-              fontSize: 16,
-            }}
+            style={styles.inputText}
             placeholder="Title"
             textBreakStrategy={'simple'}
             underlineColorAndroid={'transparent'}
@@ -87,26 +78,14 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
             value={alarm?.title}
           />
         </View>
-        <View>
+        <View style={{...styles.inputContainer, ...styles.descriptionContainer}}>
           <Text
-            style={{
-              marginTop: 10,
-              marginLeft: 20,
-              fontWeight: 'bold',
-            }}
+            style={styles.labelText}
           >
             Description
           </Text>
           <TextInput
-            style={{
-              margin: 10,
-              marginTop: 5,
-              borderWidth: 1,
-              borderRadius: 10,
-              padding: 10,
-              fontSize: 16,
-              maxHeight: 150,
-            }}
+            style={{...styles.inputText, ...styles.descriptionInputText}}
             placeholder="Description"
             multiline={true}
             textBreakStrategy={'simple'}
@@ -120,33 +99,19 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
           </TextInput>
         </View>
         <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-          }}
+          style={styles.switchSection}
         >
           <View>
             <Text
-              style={{
-                marginTop: 10,
-                fontWeight: 'bold',
-              }}
+              style={styles.switchLabel}
             >
               Is Active?
             </Text>
             <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-              }}
+              style={styles.switchContainer}
             >
               <Switch
-                style={{
-                  margin: 10,
-                  marginTop: 0,
-                }}
+                style={styles.switch}
                 onValueChange={(value) => {
                   handleAlarmChange(value, 'isActive')
                 }}
@@ -157,25 +122,15 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
 
           <View>
             <Text
-              style={{
-                marginTop: 10,
-                fontWeight: 'bold',
-              }}
+              style={styles.switchLabel}
             >
               Is one ring only??
             </Text>
             <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-              }}
+              style={styles.switchContainer}
             >
               <Switch
-                style={{
-                  margin: 10,
-                  marginTop: 0,
-                }}
+                style={styles.switch}
                 onValueChange={(value) => {
                   handleAlarmChange(value, 'isOneTime')
                 }}
@@ -185,16 +140,62 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
           </View>
         </View>
         <View>
-          <Button
-            title="next"
-            onPress={() => {
-              navigation.navigate('EditMapAlarm', { alarm })
-            }}
-          />
+          <DefaultButton title={'next'} onPress={() => {
+             navigation.navigate('EditMapAlarm', { alarm })
+          }}/>
         </View>
       </SafeAreaView>
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  editAlarm: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  inputContainer: {
+    
+  },
+  labelText: {
+    marginTop: 10,
+    marginLeft: 20,
+    fontWeight: 'bold',
+  },
+  inputText: {
+    margin: 10,
+    marginTop: 5,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    fontSize: 16,
+  },
+  descriptionContainer: {
+    flexGrow: 1
+  },
+  descriptionInputText: {
+    flexGrow: 1,
+    verticalAlign: 'top'
+  },
+  switchSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  switchLabel: {
+    marginTop: 10,
+    fontWeight: 'bold',
+  },
+  switchContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  switch: {
+    margin: 10,
+    marginTop: 0,
+  }
+})
 
 export default EditAlarm

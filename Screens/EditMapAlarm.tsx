@@ -12,7 +12,7 @@ import * as Location from 'expo-location'
 import Toast from 'react-native-root-toast'
 import MultiSlider from '@ptomasroos/react-native-multi-slider'
 
-import dbConnection from '../db/SQLite'
+import dbConnection from '../Db/SQLite'
 import {
   EditMapAlarmScreenNavigationProp,
   EditMapAlarmScreenRouteProp,

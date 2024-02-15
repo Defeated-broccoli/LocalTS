@@ -6,7 +6,7 @@ import * as Notifications from 'expo-notifications'
 import * as Location from 'expo-location'
 import { Alarm } from '../Models/Alarm'
 
-import dbConnection from '../db/SQLite'
+import dbConnection from '../Db/SQLite'
 import { schedulePushNotification } from './PushNotification'
 
 const locAlTask = 'LOCAL_APP_CHECK_LOC_TASK'
