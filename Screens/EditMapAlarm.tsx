@@ -31,8 +31,6 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
   const [alarm, setAlarm] = useState<Alarm>(route.params.alarm)
 
   useEffect(() => {
-    console.log(alarm)
-
     if (alarm.location?.lat == null) {
       getInitialRegion()
         .then((result) => {
