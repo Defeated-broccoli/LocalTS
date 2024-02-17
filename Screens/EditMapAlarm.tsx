@@ -11,7 +11,6 @@ import {
 import MapView, { Circle, Marker } from 'react-native-maps'
 import * as Location from 'expo-location'
 import Toast from 'react-native-root-toast'
-import MultiSlider from '@ptomasroos/react-native-multi-slider'
 
 import dbConnection from '../Db/SQLite'
 import {
@@ -21,6 +20,7 @@ import {
 import { Alarm, AlarmLocation } from '../Models/Alarm'
 import TopBarComponent from '../Components/TopBarComponent'
 import DefaultButton from '../Components/DefaultButton'
+import Slider from '@react-native-community/slider'
 
 type EditMapAlarmProp = {
   route: EditMapAlarmScreenRouteProp
@@ -91,9 +91,8 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
   return (
     <>
       {alarm?.location?.lat != null && (
-        <SafeAreaView
-          style={styles.editMapAlarm}
-        >
+        <SafeAreaView style={styles.editMapAlarm}>
+          <TopBarComponent navigation={navigation} />
           <MapView
             style={styles.map}
             initialRegion={{
@@ -114,7 +113,7 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
                 },
               }))
             }}
-            onRegionChangeComplete={() => {}}
+            showsUserLocation={true}
           >
             <Circle
               center={{
@@ -128,14 +127,6 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
             />
           </MapView>
           <View style={styles.bottomContainer}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignContent: 'center',
-            }}
-          >
             <Text
               style={{
                 fontWeight: 'bold',
@@ -146,38 +137,34 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
             >
               {alarm.location?.rangeKm ?? 0.5}km
             </Text>
-            <MultiSlider
-              containerStyle={{
-                alignSelf: 'center',
-              }}
-              min={0.5}
-              max={50}
-              step={0.1}
-              onValuesChange={(range) => {
+            <Slider
+              style={styles.slider}
+              minimumValue={0.5}
+              maximumValue={50}
+              step={0.5}
+              onValueChange={(range) => {
                 setAlarm((prev) => ({
                   ...prev,
                   location: {
                     ...prev.location,
-                    rangeKm: Math.round(range[0] * 10) / 10,
+                    rangeKm: Math.round(range * 10) / 10,
                   },
                 }))
               }}
-              onValuesChangeFinish={(value) => {}}
-              values={[alarm.location?.rangeKm ?? 0.5]}
+              value={alarm.location?.rangeKm ?? 0.5}
             />
-          </View>
-          <DefaultButton
-            title='save'
-            onPress={() => {
-              handleSaveButton()
-            }}
-          />
+            <DefaultButton
+              title="save"
+              onPress={() => {
+                handleSaveButton()
+              }}
+            />
           </View>
         </SafeAreaView>
       )}
 
       {alarm?.location?.lat == null && <Text>Loading...</Text>}
-      </>
+    </>
   )
 }
 
@@ -186,8 +173,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
-     width: '100%', 
-     flexGrow: 1 
+    width: '100%',
+    flexGrow: 1,
   },
   bottomContainer: {
     position: 'absolute',
@@ -199,9 +186,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignSelf: 'center',
     width: '94%',
-    zIndex: 5
+    zIndex: 5,
   },
-
+  slider: {
+    height: 50,
+  },
 })
 
 export default EditMapAlarm

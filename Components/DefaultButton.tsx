@@ -1,20 +1,38 @@
-import { ViewStyle, StyleSheet, Text, TextStyle, TouchableOpacity, GestureResponderEvent } from "react-native"
-import { darkBlue, lightBlue, lightText } from "../Constants/constants"
+import {
+  ViewStyle,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  GestureResponderEvent,
+} from 'react-native'
+import { darkBlue, lightBlue, lightText } from '../Constants/constants'
+import { useState } from 'react'
 
 interface DefaultButtonProps {
-  title: string,
-  defaultButtonStyle?: ViewStyle,
-  textStyle?: TextStyle,
-  onPress?: (e: GestureResponderEvent) => void,
-  onLongPress?: (e: GestureResponderEvent) => void,
+  title: string
+  disabled?: boolean
+  defaultButtonStyle?: ViewStyle
+  textStyle?: TextStyle
+  onPress?: (e: GestureResponderEvent) => void
+  onLongPress?: (e: GestureResponderEvent) => void
 }
 
-const DefaultButton = ({title, defaultButtonStyle, textStyle, onPress, onLongPress}: DefaultButtonProps) => {
+const DefaultButton = ({
+  title,
+  disabled = false,
+  defaultButtonStyle,
+  textStyle,
+  onPress,
+  onLongPress,
+}: DefaultButtonProps) => {
   return (
-    <TouchableOpacity style={{...styles.defaultButtonStyle, ...defaultButtonStyle}}
-    onPress={(e) => onPress(e)}
-    onLongPress={(e) => onLongPress(e)}>
-      <Text style={{...styles.textStyle, ...textStyle}}>{title}</Text>
+    <TouchableOpacity
+      style={{ ...styles.defaultButtonStyle, ...defaultButtonStyle }}
+      onPress={(e) => onPress(e)}
+      onLongPress={(e) => onLongPress(e)}
+    >
+      <Text style={{ ...styles.textStyle, ...textStyle }}>{title}</Text>
     </TouchableOpacity>
   )
 }
@@ -27,15 +45,15 @@ const styles = StyleSheet.create({
     backgroundColor: darkBlue,
     borderRadius: 10,
     margin: 10,
-    padding: 5
+    padding: 5,
   },
   textStyle: {
     color: lightText,
     fontWeight: 'bold',
     fontSize: 16,
     textAlign: 'center',
-    textTransform: 'uppercase'
-  }
+    textTransform: 'uppercase',
+  },
 })
 
 export default DefaultButton
