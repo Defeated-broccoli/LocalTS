@@ -95,7 +95,19 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
     <>
       {alarm?.location?.lat != null && (
         <SafeAreaView style={styles.editMapAlarm}>
-          <TopBarComponent navigation={navigation} />
+          <TopBarComponent
+            navigation={navigation}
+            onForwardPress={() => {
+              handleSaveButton()
+            }}
+            onBackPress={
+              navigation.canGoBack
+                ? () => {
+                    navigation.goBack()
+                  }
+                : null
+            }
+          />
           <MapView
             style={styles.map}
             tintColor={primaryDarkColor}

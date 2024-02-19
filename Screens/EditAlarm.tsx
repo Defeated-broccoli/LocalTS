@@ -60,10 +60,22 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
     setAlarm((prev) => ({ ...prev, [name]: value }))
   }
 
+  const handleGoForward = () => {
+    navigation.navigate('EditMapAlarm', { alarm })
+  }
+
   return (
     <>
       <SafeAreaView style={styles.editAlarm}>
-        <TopBarComponent navigation={navigation} />
+        <TopBarComponent
+          navigation={navigation}
+          onForwardPress={() => {
+            handleGoForward()
+          }}
+          onBackPress={() => {
+            navigation.goBack()
+          }}
+        />
         <View style={styles.inputContainer}>
           <Text style={styles.labelText}>Title</Text>
           <TextInput
@@ -135,7 +147,7 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
           <DefaultButton
             title={'next'}
             onPress={() => {
-              navigation.navigate('EditMapAlarm', { alarm })
+              handleGoForward()
             }}
           />
         </View>

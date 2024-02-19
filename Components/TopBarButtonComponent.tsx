@@ -9,14 +9,25 @@ import {
 import { RootStackParamList } from '../NavigationProps/NavProps'
 import { lightText } from '../Constants/constants'
 
+export enum BarButtonTypes {
+  BACK,
+  FORWARD,
+}
+
 interface TopBarButtonComponentProp {
   navigation: StackNavigationProp<RootStackParamList>
+  barButtonType?: BarButtonTypes
+  onPress: () => void
+  disabled?: boolean
   containerStyle?: ViewStyle
   textStyle?: TextStyle
 }
 
 const TopBarButtonComponent = ({
   navigation,
+  onPress,
+  disabled = false,
+  barButtonType,
   containerStyle,
   textStyle,
 }: TopBarButtonComponentProp) => {
@@ -25,14 +36,18 @@ const TopBarButtonComponent = ({
       style={{
         ...containerStyle,
         ...styles.containerStyle,
-        display: navigation.canGoBack() ? 'flex' : 'none',
+        display: !disabled ? 'flex' : 'none',
+        borderRightWidth: barButtonType == BarButtonTypes.BACK ? 1 : 0,
+        borderLeftWidth: barButtonType == BarButtonTypes.FORWARD ? 1 : 0,
       }}
-      disabled={!navigation.canGoBack()}
+      disabled={disabled}
       onPress={() => {
-        navigation.goBack()
+        onPress()
       }}
     >
-      <Text style={{ ...textStyle, ...styles.textStyle }}>{'<'}</Text>
+      <Text style={{ ...textStyle, ...styles.textStyle }}>
+        {barButtonType == BarButtonTypes.FORWARD ? '>' : '<'}
+      </Text>
     </TouchableOpacity>
   )
 }
@@ -41,10 +56,10 @@ const styles = StyleSheet.create({
   containerStyle: {
     margin: 5,
     width: 40,
-    borderRightWidth: 1,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: lightText,
   },
   textStyle: {
     fontSize: 35,
