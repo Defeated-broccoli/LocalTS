@@ -33,8 +33,8 @@ type EditAlarmProps = {
 const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
   const [alarm, setAlarm] = useState<Alarm>(
     route.params.alarm ?? {
-      title: 'Title example',
-      description: 'Desc example',
+      title: '',
+      description: '',
       location: {},
       isActive: true,
       isOneTime: false,
