@@ -38,7 +38,7 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
   }, [])
 
   const setupBackgroundTask = async () => {
-    registerForPushNotificationsAsync()
+    await registerForPushNotificationsAsync()
       .then((result) => {
         if (!result) console.log('Push notification register failed')
         // else {

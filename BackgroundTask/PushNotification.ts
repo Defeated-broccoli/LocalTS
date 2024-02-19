@@ -37,9 +37,9 @@ async function registerForPushNotificationsAsync(): Promise<boolean> {
 
 const checkPermissionStatus = async (): Promise<boolean> => {
   return await Notifications.getPermissionsAsync()
-    .then((status) => {
+    .then(async (status) => {
       if (!status.granted) {
-        Notifications.requestPermissionsAsync()
+        await Notifications.requestPermissionsAsync()
           .then((result) => {
             return result.granted
           })

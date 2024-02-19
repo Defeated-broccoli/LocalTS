@@ -16,17 +16,9 @@ TaskManager.defineTask(locAlTask, async () => {
 })
 
 const startBackgroundTask = async (): Promise<boolean> => {
-  const isGranted = await Location.isBackgroundLocationAvailableAsync().then(
-    async (result) => {
-      if (!result) {
-        const permission = await Location.requestBackgroundPermissionsAsync()
-
-        return permission.granted
-      } else {
-        return result
-      }
-    }
-  )
+  const isGranted = await getPermissionsAsync().then(async (result) => {
+    return result
+  })
 
   if (!isGranted) {
     console.log('Background location permission is not granted!')
@@ -42,6 +34,29 @@ const startBackgroundTask = async (): Promise<boolean> => {
   } else {
     registerTaskAsync()
   }
+}
+
+const getPermissionsAsync = async (): Promise<boolean> => {
+  const forePerm = await Location.getForegroundPermissionsAsync().then(
+    (result) => {
+      if (!result.granted) {
+        return Location.requestForegroundPermissionsAsync()
+      } else {
+        return result
+      }
+    }
+  )
+  const backPerm = await Location.getBackgroundPermissionsAsync().then(
+    (result) => {
+      if (!result.granted) {
+        return Location.requestBackgroundPermissionsAsync()
+      } else {
+        return result
+      }
+    }
+  )
+
+  return backPerm.granted && forePerm.granted
 }
 
 const checkStatusAsync = async (): Promise<boolean> => {
@@ -103,7 +118,7 @@ const locationTaskAsync = async () => {
         console.log(e)
       )
 
-    console.log('Localization is availabe: ', isLocAvailable)
+    console.log('Localization is available: ', isLocAvailable)
 
     if (isLocAvailable) {
       Location.getCurrentPositionAsync({
@@ -117,7 +132,11 @@ const locationTaskAsync = async () => {
               console.log(`Scanning ${alarms.length} alarms...`)
               alarms.forEach((alarm, index) => {
                 console.log(`Alarm at ${index}/id: ${alarm.id} calculating...`)
-                if (alarm.location != null && loc?.coords != null) {
+                if (
+                  alarm.location != null &&
+                  loc?.coords != null &&
+                  alarm.isActive
+                ) {
                   const distance = calculateDistance(
                     alarm.location.lat,
                     alarm.location.lon,
@@ -125,7 +144,7 @@ const locationTaskAsync = async () => {
                     loc.coords.longitude
                   )
 
-                  if (distance <= alarm.location.rangeKm && alarm.isActive) {
+                  if (distance <= alarm.location.rangeKm) {
                     schedulePushNotification(alarm, new Date(Date.now())).then(
                       (id) => console.log(id)
                     )
