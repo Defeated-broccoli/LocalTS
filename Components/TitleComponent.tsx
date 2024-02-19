@@ -22,9 +22,13 @@ const TitleComponent = ({
 }: TitleComponentProp) => {
   return (
     <View style={{ ...styles.containerStyle, ...containerStyle }}>
-      <Text style={{ ...styles.textStyle, ...textStyle }}>Lo</Text>
-      {/* <Image style={{...styles.imageStyle, ...imageStyle}} source={require('../assets/local-icon.png')}/> */}
-      <Text style={{ ...styles.textStyle, ...textStyle }}>cal</Text>
+      {/* <Text style={{ ...styles.textStyle, ...textStyle }}>Lo</Text>
+      <Image style={{...styles.imageStyle, ...imageStyle}} source={require('../assets/local-icon.png')}/> 
+      <Text style={{ ...styles.textStyle, ...textStyle }}>cal</Text>  */}
+      <Image
+        style={{ ...styles.imageStyle, ...imageStyle }}
+        source={require('../assets/logo.png')}
+      />
     </View>
   )
 }
@@ -43,9 +47,9 @@ const styles = StyleSheet.create({
     color: lightText,
   },
   imageStyle: {
-    width: 26,
-    height: 26,
-    marginTop: 8,
+    margin: 5,
+    height: 40,
+    objectFit: 'contain',
   },
 })
 

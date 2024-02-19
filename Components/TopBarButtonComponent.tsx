@@ -5,6 +5,8 @@ import {
   StyleSheet,
   TextStyle,
   Text,
+  Image,
+  ImageStyle,
 } from 'react-native'
 import { RootStackParamList } from '../NavigationProps/NavProps'
 import { lightText } from '../Constants/constants'
@@ -20,7 +22,7 @@ interface TopBarButtonComponentProp {
   onPress: () => void
   disabled?: boolean
   containerStyle?: ViewStyle
-  textStyle?: TextStyle
+  imageStyle?: ImageStyle
 }
 
 const TopBarButtonComponent = ({
@@ -29,7 +31,7 @@ const TopBarButtonComponent = ({
   disabled = false,
   barButtonType,
   containerStyle,
-  textStyle,
+  imageStyle,
 }: TopBarButtonComponentProp) => {
   return (
     <TouchableOpacity
@@ -45,9 +47,15 @@ const TopBarButtonComponent = ({
         onPress()
       }}
     >
-      <Text style={{ ...textStyle, ...styles.textStyle }}>
-        {barButtonType == BarButtonTypes.FORWARD ? '>' : '<'}
-      </Text>
+      <Image
+        source={require('../assets/bar-button.png')}
+        style={{
+          ...imageStyle,
+          ...styles.imageStyle,
+          transform:
+            barButtonType == BarButtonTypes.BACK ? [{ scaleX: -1 }] : [],
+        }}
+      />
     </TouchableOpacity>
   )
 }
@@ -61,10 +69,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: lightText,
   },
-  textStyle: {
-    fontSize: 35,
-    fontWeight: 'bold',
-    color: lightText,
+  imageStyle: {
+    height: 40,
+    objectFit: 'contain',
   },
   visibilityFalse: {
     display: 'none',
