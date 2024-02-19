@@ -63,6 +63,7 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
         lon: loc?.coords?.longitude ?? 0,
         latDelta: 1,
         lonDelta: 1,
+        rangeKm: 0.5,
       })
     })
   }
