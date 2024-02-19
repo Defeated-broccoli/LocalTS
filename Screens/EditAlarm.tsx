@@ -18,6 +18,12 @@ import {
 import { Alarm } from '../Models/Alarm'
 import TopBarComponent from '../Components/TopBarComponent'
 import DefaultButton from '../Components/DefaultButton'
+import {
+  detailColor,
+  primaryColor,
+  primaryDarkColor,
+  secondaryDarkColor,
+} from '../Constants/constants'
 
 type EditAlarmProps = {
   route: EditAlarmScreenRouteProp
@@ -56,16 +62,10 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
 
   return (
     <>
-      <SafeAreaView
-        style={styles.editAlarm} 
-      >
-        <TopBarComponent navigation={navigation}/>
+      <SafeAreaView style={styles.editAlarm}>
+        <TopBarComponent navigation={navigation} />
         <View style={styles.inputContainer}>
-          <Text
-            style={styles.labelText}
-          >
-            Title
-          </Text>
+          <Text style={styles.labelText}>Title</Text>
           <TextInput
             style={styles.inputText}
             placeholder="Title"
@@ -78,14 +78,12 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
             value={alarm?.title}
           />
         </View>
-        <View style={{...styles.inputContainer, ...styles.descriptionContainer}}>
-          <Text
-            style={styles.labelText}
-          >
-            Description
-          </Text>
+        <View
+          style={{ ...styles.inputContainer, ...styles.descriptionContainer }}
+        >
+          <Text style={styles.labelText}>Description</Text>
           <TextInput
-            style={{...styles.inputText, ...styles.descriptionInputText}}
+            style={{ ...styles.inputText, ...styles.descriptionInputText }}
             placeholder="Description"
             multiline={true}
             textBreakStrategy={'simple'}
@@ -98,20 +96,16 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
             {alarm?.description}
           </TextInput>
         </View>
-        <View
-          style={styles.switchSection}
-        >
+        <View style={styles.switchSection}>
           <View>
-            <Text
-              style={styles.switchLabel}
-            >
-              Is Active?
-            </Text>
-            <View
-              style={styles.switchContainer}
-            >
+            <Text style={styles.switchLabel}>Is Active?</Text>
+            <View style={styles.switchContainer}>
               <Switch
                 style={styles.switch}
+                thumbColor={
+                  alarm?.isActive == true ? primaryDarkColor : primaryColor
+                }
+                trackColor={{ true: primaryColor }}
                 onValueChange={(value) => {
                   handleAlarmChange(value, 'isActive')
                 }}
@@ -121,16 +115,14 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
           </View>
 
           <View>
-            <Text
-              style={styles.switchLabel}
-            >
-              Is one ring only??
-            </Text>
-            <View
-              style={styles.switchContainer}
-            >
+            <Text style={styles.switchLabel}>Is one ring only??</Text>
+            <View style={styles.switchContainer}>
               <Switch
                 style={styles.switch}
+                thumbColor={
+                  alarm?.isOneTime == true ? primaryDarkColor : primaryColor
+                }
+                trackColor={{ true: primaryColor }}
                 onValueChange={(value) => {
                   handleAlarmChange(value, 'isOneTime')
                 }}
@@ -140,9 +132,12 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
           </View>
         </View>
         <View>
-          <DefaultButton title={'next'} onPress={() => {
-             navigation.navigate('EditMapAlarm', { alarm })
-          }}/>
+          <DefaultButton
+            title={'next'}
+            onPress={() => {
+              navigation.navigate('EditMapAlarm', { alarm })
+            }}
+          />
         </View>
       </SafeAreaView>
     </>
@@ -153,11 +148,9 @@ const styles = StyleSheet.create({
   editAlarm: {
     height: '100%',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
-  inputContainer: {
-    
-  },
+  inputContainer: {},
   labelText: {
     marginTop: 10,
     marginLeft: 20,
@@ -172,11 +165,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   descriptionContainer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   descriptionInputText: {
     flexGrow: 1,
-    verticalAlign: 'top'
+    verticalAlign: 'top',
   },
   switchSection: {
     display: 'flex',
@@ -195,7 +188,7 @@ const styles = StyleSheet.create({
   switch: {
     margin: 10,
     marginTop: 0,
-  }
+  },
 })
 
 export default EditAlarm

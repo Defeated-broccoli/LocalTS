@@ -21,6 +21,11 @@ import { Alarm, AlarmLocation } from '../Models/Alarm'
 import TopBarComponent from '../Components/TopBarComponent'
 import DefaultButton from '../Components/DefaultButton'
 import Slider from '@react-native-community/slider'
+import {
+  primaryColor,
+  primaryDarkColor,
+  primaryRgbaColor,
+} from '../Constants/constants'
 
 type EditMapAlarmProp = {
   route: EditMapAlarmScreenRouteProp
@@ -93,6 +98,7 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
           <TopBarComponent navigation={navigation} />
           <MapView
             style={styles.map}
+            tintColor={primaryDarkColor}
             initialRegion={{
               latitude: alarm.location?.lat,
               longitude: alarm.location?.lon,
@@ -120,11 +126,11 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
               }}
               radius={(alarm.location?.rangeKm ?? 0.5) * 1000}
               strokeWidth={1}
-              strokeColor={'#1a66ff'}
-              fillColor={'rgba(220,238,255,0.5)'}
+              strokeColor={primaryDarkColor}
+              fillColor={primaryRgbaColor}
             />
           </MapView>
-          <View style={styles.bottomContainer}>
+          <View style={{ ...styles.bottomContainer }}>
             <Text
               style={{
                 fontWeight: 'bold',
@@ -139,6 +145,8 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
               style={styles.slider}
               minimumValue={0.5}
               maximumValue={50}
+              thumbTintColor={primaryDarkColor}
+              minimumTrackTintColor={primaryColor}
               step={0.5}
               onValueChange={(range) => {
                 setAlarm((prev) => ({

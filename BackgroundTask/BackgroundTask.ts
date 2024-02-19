@@ -94,47 +94,64 @@ const unregisterTaskAsync = async (): Promise<boolean> => {
 const locationTaskAsync = async () => {
   console.log('Task starts...', new Date(Date.now()))
 
-  //getCurrentPositionAsync() takes long time to load and crashes often
-  //getLastKnownPosition() often returns null
-  Location.getCurrentPositionAsync({
-    accuracy: Location.Accuracy.Low
-  })
-    .then((loc) => {
-      console.log(loc)
-      dbConnection
-        .getAlarms()
-        .then((alarms) => {
-          console.log(`Scanning ${alarms.length} alarms...`)
-          alarms.forEach((alarm, index) => {
-            console.log(`Alarm at ${index}/id: ${alarm.id} calculating...`)
-            if (alarm.location != null && loc?.coords != null) {
-              const distance = calculateDistance(
-                alarm.location.lat,
-                alarm.location.lon,
-                loc.coords.latitude,
-                loc.coords.longitude
-              )
+  try {
+    //getCurrentPositionAsync() takes long time to load and crashes often
+    //getLastKnownPosition() often returns null
 
-              if (distance <= alarm.location.rangeKm && alarm.isActive) {
-                schedulePushNotification(alarm, new Date(Date.now())).then(
-                  (id) => console.log(id)
-                )
+    const isLocAvailable =
+      await Location.isBackgroundLocationAvailableAsync().catch((e) =>
+        console.log(e)
+      )
 
-                if (alarm.isOneTime)
-                  dbConnection.updateAlarm({ ...alarm, isActive: false })
+    console.log('Localization is availabe: ', isLocAvailable)
 
-                console.log('Alarm captured', alarm)
-              }
-            }
-          })
-          console.log('Task finished', new Date(Date.now()))
+    if (isLocAvailable) {
+      Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.High,
+      })
+        .then((loc) => {
+          console.log(loc)
+          dbConnection
+            .getAlarms()
+            .then((alarms) => {
+              console.log(`Scanning ${alarms.length} alarms...`)
+              alarms.forEach((alarm, index) => {
+                console.log(`Alarm at ${index}/id: ${alarm.id} calculating...`)
+                if (alarm.location != null && loc?.coords != null) {
+                  const distance = calculateDistance(
+                    alarm.location.lat,
+                    alarm.location.lon,
+                    loc.coords.latitude,
+                    loc.coords.longitude
+                  )
+
+                  if (distance <= alarm.location.rangeKm && alarm.isActive) {
+                    schedulePushNotification(alarm, new Date(Date.now())).then(
+                      (id) => console.log(id)
+                    )
+
+                    if (alarm.isOneTime)
+                      dbConnection.updateAlarm({ ...alarm, isActive: false })
+
+                    console.log('Alarm captured', alarm)
+                  }
+                }
+              })
+              console.log('Task finished', new Date(Date.now()))
+            })
+            .catch((e) => console.log(`Alarm failed: ${e}`))
         })
-        .catch((e) => console.log(`Alarm failed: ${e}`))
-    })
-    .catch((e) => {
-      console.log('Error while getting position', e)
+        .catch((e) => {
+          console.log('Error while getting position', e)
+          return null
+        })
+    } else {
+      console.log('Location not available')
       return null
-    })
+    }
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 const calculateDistance = (

@@ -1,4 +1,3 @@
-
 import {
   NavigationContainer,
   DefaultTheme,
@@ -15,6 +14,7 @@ import EditMapAlarm from './Screens/EditMapAlarm'
 import { SafeAreaView, StatusBar } from 'react-native'
 import Home from './Screens/Home'
 import TopBarComponent from './Components/TopBarComponent'
+import { secondaryColor } from './Constants/constants'
 
 const Stack = createStackNavigator<RootStackParamList>()
 
@@ -29,7 +29,7 @@ const theme = {
 export default function App() {
   return (
     <>
-      <StatusBar backgroundColor={'pink'} />
+      <StatusBar backgroundColor={'black'} />
       <NavigationContainer theme={theme}>
         <Stack.Navigator
           screenOptions={{ headerShown: false }}

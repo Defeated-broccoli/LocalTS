@@ -6,7 +6,13 @@ import {
   TouchableOpacity,
   GestureResponderEvent,
 } from 'react-native'
-import { darkBlue, lightBlue, lightText } from '../Constants/constants'
+import {
+  primaryColor,
+  secondaryColor,
+  lightText,
+  primaryDarkColor,
+  basicShadow,
+} from '../Constants/constants'
 import { useState } from 'react'
 
 interface DefaultButtonProps {
@@ -42,10 +48,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
-    backgroundColor: darkBlue,
+    backgroundColor: primaryDarkColor,
     borderRadius: 10,
     margin: 10,
     padding: 5,
+    ...basicShadow,
   },
   textStyle: {
     color: lightText,

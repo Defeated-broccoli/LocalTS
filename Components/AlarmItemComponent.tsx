@@ -1,7 +1,14 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import { Alarm } from '../Models/Alarm'
 import MapView from 'react-native-maps'
-import { darkBlue, lightBlue } from '../Constants/constants'
+import {
+  primaryColor,
+  secondaryColor,
+  detailColor,
+  darkText,
+  basicShadow,
+  primaryDarkColor,
+} from '../Constants/constants'
 
 interface AlarmItemComponentsProps {
   alarm: Alarm
@@ -64,7 +71,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderRadius: 20,
-    backgroundColor: darkBlue,
+    backgroundColor: detailColor,
+    ...basicShadow,
   },
   mapContainer: {
     overflow: 'hidden',
