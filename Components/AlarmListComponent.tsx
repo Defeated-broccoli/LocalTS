@@ -1,9 +1,6 @@
 import { FlatList } from 'react-native-gesture-handler'
 import { Alarm } from '../Models/Alarm'
-import {
-  AlarmItemComponent,
-  AlarmItemBackgroundComponent,
-} from './AlarmItemComponent'
+import { AlarmItemComponent } from './AlarmItemComponent'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import {
   View,
@@ -12,66 +9,34 @@ import {
   Animated,
   ViewStyle,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native'
+import { useState } from 'react'
 
 interface AlarmListComponentProps {
   alarms: Alarm[]
-  alarmListStyle?: ViewStyle
-  onEditClick: (alarm: Alarm) => void
-  onDeleteClick: (alarm: Alarm) => void
+  alarmListStyle: ViewStyle
+  handleEditAlarm: (alarm: Alarm) => void
+  handleDeleteAlarm: (alarm: Alarm) => void
 }
 
 const AlarmListComponent = ({
   alarms,
   alarmListStyle,
-  onEditClick,
-  onDeleteClick,
+  handleEditAlarm,
+  handleDeleteAlarm,
 }: AlarmListComponentProps) => {
-  let animationIsRunning = false
-
-  const rowTranslateAnimatedValues: Animated.Value[] = []
-
-  const onSwipeValueChange = (key: string, value: number) => {
-    if (value < -Dimensions.get('window').width / 2 && !animationIsRunning) {
-      animationIsRunning = true
-      rowTranslateAnimatedValues[key] = new Animated.Value(1)
-      Animated.timing(rowTranslateAnimatedValues[key], {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: false,
-      }).start(() => {
-        const alarm = alarms.find((item) => item.id === parseInt(key))
-        onDeleteClick(alarm)
-        animationIsRunning = false
-      })
-    } else if (
-      value > Dimensions.get('window').width / 2 &&
-      !animationIsRunning
-    ) {
-      animationIsRunning = true
-      rowTranslateAnimatedValues[key] = new Animated.Value(1)
-      Animated.timing(rowTranslateAnimatedValues[key], {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: false,
-      }).start(() => {
-        const alarm = alarms.find((item) => item.id === parseInt(key))
-        onEditClick(alarm)
-        animationIsRunning = false
-      })
-    }
-  }
-
   return (
-    <SwipeListView
-      style={{ ...styles.alarmListStyle, ...alarmListStyle }}
-      data={alarms.map((alarm, i) => ({ key: alarm.id, value: alarm }))}
-      renderItem={(data, rowMap) => (
-        <AlarmItemComponent alarm={data.item.value} />
+    <FlatList
+      style={[styles.alarmListStyle, alarmListStyle]}
+      data={alarms}
+      renderItem={({ item }) => (
+        <AlarmItemComponent
+          alarm={item}
+          handleEditAlarm={(alarm) => handleEditAlarm(alarm)}
+          handleDeleteAlarm={(alarm) => handleDeleteAlarm(alarm)}
+        />
       )}
-      renderHiddenItem={(data, rowMap) => <AlarmItemBackgroundComponent />}
-      onSwipeValueChange={({ key, value }) => onSwipeValueChange(key, value)}
-      //useNativeDriver={false}
     />
   )
 }

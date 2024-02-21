@@ -24,7 +24,7 @@ import Slider from '@react-native-community/slider'
 import {
   primaryColor,
   primaryDarkColor,
-  primaryRgbaColor,
+  primaryRgbaColorAlpha03,
 } from '../Constants/constants'
 import { useFonts } from 'expo-font'
 
@@ -149,7 +149,7 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
               radius={(alarm.location?.rangeKm ?? 0.5) * 1000}
               strokeWidth={1}
               strokeColor={primaryDarkColor}
-              fillColor={primaryRgbaColor}
+              fillColor={primaryRgbaColorAlpha03}
             />
           </MapView>
           <View style={{ ...styles.bottomContainer }}>

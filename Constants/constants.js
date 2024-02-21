@@ -1,8 +1,13 @@
 const primaryColor = '#698AE0'
-const primaryRgbaColor = 'rgba(105, 138, 224, 0.3)'
+const primaryRgbaColorAlpha03 = 'rgba(105, 138, 224, 0.3)'
+
 const primaryDarkColor = '#152B63'
+const primaryRgbaDarkColor = 'rgba(21 ,43, 99, 1)'
+
 const secondaryColor = '#F5F5F5'
-const secondaryDarkColor = '#301263'
+
+const secondaryRgbaDarkColor = 'rgba(206,42,42,1)'
+
 const detailColor = '#A2B3DA'
 
 const lightText = '#FFFFFF'
@@ -17,10 +22,11 @@ const basicShadow = {
 
 export {
   primaryColor,
-  primaryRgbaColor,
+  primaryRgbaDarkColor,
+  primaryRgbaColorAlpha03,
   primaryDarkColor,
   secondaryColor,
-  secondaryDarkColor,
+  secondaryRgbaDarkColor,
   detailColor,
   lightText,
   darkText,
