@@ -48,7 +48,7 @@ const TopBarButtonComponent = ({
       }}
     >
       <Image
-        source={require('../assets/bar-button.png')}
+        source={require('../assets/img/bar-button.png')}
         style={{
           ...imageStyle,
           ...styles.imageStyle,

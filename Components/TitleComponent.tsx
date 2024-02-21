@@ -23,11 +23,11 @@ const TitleComponent = ({
   return (
     <View style={{ ...styles.containerStyle, ...containerStyle }}>
       {/* <Text style={{ ...styles.textStyle, ...textStyle }}>Lo</Text>
-      <Image style={{...styles.imageStyle, ...imageStyle}} source={require('../assets/local-icon.png')}/> 
+      <Image style={{...styles.imageStyle, ...imageStyle}} source={require('../assets/img/local-icon.png')}/> 
       <Text style={{ ...styles.textStyle, ...textStyle }}>cal</Text>  */}
       <Image
         style={{ ...styles.imageStyle, ...imageStyle }}
-        source={require('../assets/logo.png')}
+        source={require('../assets/img/logo.png')}
       />
     </View>
   )

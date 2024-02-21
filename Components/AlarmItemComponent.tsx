@@ -9,19 +9,33 @@ import {
   basicShadow,
   primaryDarkColor,
 } from '../Constants/constants'
+import { useFonts } from 'expo-font'
 
 interface AlarmItemComponentsProps {
   alarm: Alarm
 }
 
 const AlarmItemComponent = ({ alarm }: AlarmItemComponentsProps) => {
+  const [fontsLoaded, fontError] = useFonts({
+    'StickNoBills-SemiBold': require('../assets/fonts/StickNoBills-SemiBold.ttf'),
+    'StickNoBills-Regular': require('../assets/fonts/StickNoBills-Regular.ttf'),
+  })
+
+  if (!fontsLoaded) {
+    return null
+  }
+
   return (
     <View style={styles.itemComponent}>
       <View style={styles.textContainer}>
-        <Text style={styles.titleText}>{alarm.title}</Text>
+        <Text style={styles.titleText}>
+          {alarm.title.length > 30
+            ? alarm.title.slice(0, 30) + '...'
+            : alarm.title}
+        </Text>
         <Text style={styles.descriptionText}>
-          {alarm.description.length > 100
-            ? alarm.description.slice(0, 100) + '...'
+          {alarm.description.length > 90
+            ? alarm.description.slice(0, 90) + '...'
             : alarm.description}
         </Text>
       </View>
@@ -53,11 +67,11 @@ const AlarmItemBackgroundComponent = () => {
     <View style={styles.backgroundItemComponent}>
       <Image
         style={{ ...styles.backgroundEditImage, ...styles.backgroundImage }}
-        source={require('../assets/pen.png')}
+        source={require('../assets/img/pen.png')}
       ></Image>
       <Image
         style={{ ...styles.backgroundDeleteImage, ...styles.backgroundImage }}
-        source={require('../assets/delete.png')}
+        source={require('../assets/img/delete.png')}
       ></Image>
     </View>
   )
@@ -89,10 +103,11 @@ const styles = StyleSheet.create({
     maxWidth: '65%',
   },
   titleText: {
-    fontWeight: 'bold',
-    maxWidth: '70%',
+    fontFamily: 'StickNoBills-SemiBold',
   },
-  descriptionText: {},
+  descriptionText: {
+    fontFamily: 'StickNoBills-Regular',
+  },
   backgroundItemComponent: {
     margin: 10,
     flex: 1,

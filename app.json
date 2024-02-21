@@ -4,10 +4,10 @@
     "slug": "loc-al-ts",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon-app.png",
+    "icon": "./assets/img/icon-app.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/img/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,14 +20,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/img/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.kitkat62.localts",
       "googleServicesFile": "./google-services.json"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/img/favicon.png"
     },
      "plugins": [
       [
@@ -42,6 +42,12 @@
           "isAndroidBackgroundLocationEnabled": true,
           "isIosBackgroundLocationEnabled": true,
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location"
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/StickNoBills-ExtraBold.ttf", "./assets/fonts/StickNoBills-Regular.ttf", "./assets/fonts/StickNoBills-SemiBold.ttf"]
         }
       ]
     ],

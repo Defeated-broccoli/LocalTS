@@ -24,6 +24,7 @@ import {
   primaryDarkColor,
   secondaryDarkColor,
 } from '../Constants/constants'
+import { useFonts } from 'expo-font'
 
 type EditAlarmProps = {
   route: EditAlarmScreenRouteProp
@@ -62,6 +63,15 @@ const EditAlarm: React.FC<EditAlarmProps> = ({ navigation, route }) => {
 
   const handleGoForward = () => {
     navigation.navigate('EditMapAlarm', { alarm })
+  }
+
+  const [fontsLoaded, fontError] = useFonts({
+    'StickNoBills-ExtraBold': require('../assets/fonts/StickNoBills-ExtraBold.ttf'),
+    'StickNoBills-Regular': require('../assets/fonts/StickNoBills-Regular.ttf'),
+  })
+
+  if (!fontsLoaded) {
+    return null
   }
 
   return (
@@ -166,7 +176,7 @@ const styles = StyleSheet.create({
   labelText: {
     marginTop: 10,
     marginLeft: 20,
-    fontWeight: 'bold',
+    fontFamily: 'StickNoBills-ExtraBold',
   },
   inputText: {
     margin: 10,
@@ -174,7 +184,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-    fontSize: 16,
+    fontSize: 20,
+    fontFamily: 'StickNoBills-Regular',
   },
   descriptionContainer: {
     flexGrow: 1,
@@ -190,16 +201,19 @@ const styles = StyleSheet.create({
   },
   switchLabel: {
     marginTop: 10,
-    fontWeight: 'bold',
+    fontFamily: 'StickNoBills-ExtraBold',
+    fontSize: 20,
   },
   switchContainer: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   switch: {
     margin: 10,
     marginTop: 0,
+    paddingRight: 10,
   },
 })
 

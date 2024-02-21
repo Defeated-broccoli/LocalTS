@@ -26,6 +26,7 @@ import {
   primaryDarkColor,
   primaryRgbaColor,
 } from '../Constants/constants'
+import { useFonts } from 'expo-font'
 
 type EditMapAlarmProp = {
   route: EditMapAlarmScreenRouteProp
@@ -34,6 +35,14 @@ type EditMapAlarmProp = {
 
 const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
   const [alarm, setAlarm] = useState<Alarm>(route.params.alarm)
+
+  const [fontsLoaded, fontError] = useFonts({
+    'StickNoBills-ExtraBold': require('../assets/fonts/StickNoBills-ExtraBold.ttf'),
+  })
+
+  if (!fontsLoaded) {
+    return null
+  }
 
   useEffect(() => {
     if (alarm.location?.lat == null) {
@@ -144,14 +153,7 @@ const EditMapAlarm: React.FC<EditMapAlarmProp> = ({ route, navigation }) => {
             />
           </MapView>
           <View style={{ ...styles.bottomContainer }}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: 16,
-                marginTop: 5,
-                marginLeft: 20,
-              }}
-            >
+            <Text style={styles.sliderLabel}>
               {alarm.location?.rangeKm ?? 0.5}km
             </Text>
             <Slider
@@ -206,6 +208,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '94%',
     zIndex: 5,
+  },
+  sliderLabel: {
+    fontSize: 16,
+    marginTop: 5,
+    marginLeft: 20,
+    fontFamily: 'StickNoBills-ExtraBold',
   },
   slider: {
     height: 50,

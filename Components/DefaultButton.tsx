@@ -7,13 +7,11 @@ import {
   GestureResponderEvent,
 } from 'react-native'
 import {
-  primaryColor,
-  secondaryColor,
   lightText,
   primaryDarkColor,
   basicShadow,
 } from '../Constants/constants'
-import { useState } from 'react'
+import { useFonts } from 'expo-font'
 
 interface DefaultButtonProps {
   title: string
@@ -32,13 +30,29 @@ const DefaultButton = ({
   onPress,
   onLongPress,
 }: DefaultButtonProps) => {
+  const [fontsLoaded, fontError] = useFonts({
+    'StickNoBills-ExtraBold': require('../assets/fonts/StickNoBills-ExtraBold.ttf'),
+  })
+
+  if (!fontsLoaded) {
+    return null
+  }
+
   return (
     <TouchableOpacity
       style={{ ...styles.defaultButtonStyle, ...defaultButtonStyle }}
       onPress={(e) => onPress(e)}
       onLongPress={(e) => onLongPress(e)}
+      disabled={disabled}
     >
-      <Text style={{ ...styles.textStyle, ...textStyle }}>{title}</Text>
+      <Text
+        style={{
+          ...styles.textStyle,
+          ...textStyle,
+        }}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   )
 }
@@ -56,10 +70,10 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: lightText,
-    fontWeight: 'bold',
-    fontSize: 16,
     textAlign: 'center',
     textTransform: 'uppercase',
+    fontFamily: 'StickNoBills-ExtraBold',
+    fontSize: 18,
   },
 })
 
