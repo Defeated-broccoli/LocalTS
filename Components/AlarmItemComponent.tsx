@@ -1,35 +1,12 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Switch,
-  TouchableOpacity,
-  Animated,
-  Dimensions,
-} from 'react-native'
+import { View, Text, StyleSheet, Animated, Dimensions } from 'react-native'
 import { Alarm } from '../Models/Alarm'
-import MapView from 'react-native-maps'
+import MapView, { MAP_TYPES } from 'react-native-maps'
 import {
-  primaryColor,
-  secondaryColor,
-  detailColor,
-  darkText,
-  basicShadow,
-  primaryDarkColor,
-  lightText,
   primaryRgbaDarkColor,
   secondaryRgbaDarkColor,
 } from '../Constants/constants'
 import { useFonts } from 'expo-font'
-import { SwipeRow } from 'react-native-swipe-list-view'
-import {
-  GestureEvent,
-  HandlerStateChangeEvent,
-  PanGestureHandler,
-  PanGestureHandlerEventPayload,
-  Swipeable,
-} from 'react-native-gesture-handler'
+import { PanGestureHandler } from 'react-native-gesture-handler'
 import { useRef } from 'react'
 
 interface AlarmItemComponentsProps {
@@ -95,11 +72,6 @@ const AlarmItemComponent = ({
     outputRange: ['rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 0)'],
   })
 
-  const interpolateMargin = heightAnimate.interpolate({
-    inputRange: [0, 100],
-    outputRange: [0, 10],
-  })
-
   const swipeElement = (value: number, duration: number) => {
     Animated.timing(swipeAnimate, {
       toValue: value,
@@ -144,10 +116,6 @@ const AlarmItemComponent = ({
     height: heightAnimate,
   }
 
-  const marginStyle = {
-    margin: interpolateMargin,
-  }
-
   if (!fontsLoaded) {
     return null
   }
@@ -167,6 +135,7 @@ const AlarmItemComponent = ({
             rotateEnabled={false}
             scrollEnabled={false}
             toolbarEnabled={false}
+            mapType={MAP_TYPES.STANDARD}
             //map padding gets rid of google logo
             mapPadding={{ top: 0, left: 0, bottom: 300, right: 0 }}
             initialRegion={{
@@ -178,12 +147,22 @@ const AlarmItemComponent = ({
           />
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.titleText}>
+          <Text
+            style={{
+              ...styles.titleText,
+              display: alarm.title.length > 0 ? 'flex' : 'none',
+            }}
+          >
             {alarm.title.length > 30
               ? alarm.title.slice(0, 30) + '...'
               : alarm.title}
           </Text>
-          <Text style={styles.descriptionText}>
+          <Text
+            style={{
+              ...styles.descriptionText,
+              display: alarm.description.length > 0 ? 'flex' : 'none',
+            }}
+          >
             {alarm.description.length > 90
               ? alarm.description.slice(0, 90) + '...'
               : alarm.description}
@@ -210,8 +189,8 @@ const styles = StyleSheet.create({
     margin: 10,
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     borderRadius: 50,
+    backgroundColor: 'white',
   },
   mapContainer: {
     overflow: 'hidden',
@@ -223,13 +202,17 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     margin: 10,
-    maxWidth: '65%',
+    width: '65%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    padding: 5,
+    overflow: 'hidden',
   },
   titleText: {
     fontFamily: 'StickNoBills-SemiBold',
+    fontSize: 16,
+    maxHeight: 20,
   },
   descriptionText: {
     fontFamily: 'StickNoBills-Regular',

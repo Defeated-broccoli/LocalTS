@@ -1,20 +1,11 @@
 import React from 'react'
 import { View, StyleSheet, Text, ViewStyle } from 'react-native'
 
-import { NavigationAction, NavigationProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import {
-  HomeScreenNavigationProp,
-  RootStackParamList,
-} from '../NavigationProps/NavProps'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { RootStackParamList } from '../NavigationProps/NavProps'
 import TitleComponent from './TitleComponent'
 import TopBarButtonComponent, { BarButtonTypes } from './TopBarButtonComponent'
-import {
-  basicShadow,
-  detailColor,
-  primaryDarkColor,
-} from '../Constants/constants'
+import { basicShadow, primaryDarkColor } from '../Constants/constants'
 
 interface TopBarComponentProps {
   navigation: StackNavigationProp<RootStackParamList>

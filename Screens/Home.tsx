@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Button, StyleSheet } from 'react-native'
+import { SafeAreaView, StyleSheet } from 'react-native'
 import { useIsFocused } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
 

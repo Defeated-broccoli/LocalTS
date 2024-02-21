@@ -1,9 +1,7 @@
-import { NavigationProp, RouteProp } from '@react-navigation/native'
 import React, { useRef, useState } from 'react'
 import {
   EditAlarmScreenNavigationProp,
   EditAlarmScreenRouteProp,
-  RootStackParamList,
 } from '../NavigationProps/NavProps'
 import {
   PanResponder,
@@ -12,18 +10,12 @@ import {
   TextInput,
   SafeAreaView,
   Switch,
-  Button,
   StyleSheet,
 } from 'react-native'
 import { Alarm } from '../Models/Alarm'
 import TopBarComponent from '../Components/TopBarComponent'
 import DefaultButton from '../Components/DefaultButton'
-import {
-  detailColor,
-  primaryColor,
-  primaryDarkColor,
-  secondaryDarkColor,
-} from '../Constants/constants'
+import { primaryColor, primaryDarkColor } from '../Constants/constants'
 import { useFonts } from 'expo-font'
 
 type EditAlarmProps = {

@@ -1,17 +1,7 @@
 import { FlatList } from 'react-native-gesture-handler'
 import { Alarm } from '../Models/Alarm'
 import { AlarmItemComponent } from './AlarmItemComponent'
-import { SwipeListView } from 'react-native-swipe-list-view'
-import {
-  View,
-  Text,
-  Dimensions,
-  Animated,
-  ViewStyle,
-  StyleSheet,
-  SafeAreaView,
-} from 'react-native'
-import { useState } from 'react'
+import { ViewStyle, StyleSheet } from 'react-native'
 
 interface AlarmListComponentProps {
   alarms: Alarm[]

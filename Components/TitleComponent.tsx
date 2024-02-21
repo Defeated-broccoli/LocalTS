@@ -1,13 +1,12 @@
 import {
   View,
-  Text,
   StyleSheet,
   Image,
   ViewStyle,
   TextStyle,
   ImageStyle,
 } from 'react-native'
-import { basicShadow, detailColor, lightText } from '../Constants/constants'
+import { lightText } from '../Constants/constants'
 
 interface TitleComponentProp {
   containerStyle?: ViewStyle
