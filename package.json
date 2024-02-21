@@ -4,13 +4,14 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "ts:check": "tsc"
   },
   "dependencies": {
     "@react-native-community/slider": "^4.4.2",
+    "@react-native/metro-config": "^0.73.5",
     "@react-navigation/native": "^6.1.10",
     "@react-navigation/stack": "^6.3.21",
     "expo": "~50.0.6",
@@ -23,6 +24,7 @@
     "expo-notifications": "^0.27.6",
     "expo-sqlite": "~13.2.2",
     "expo-status-bar": "~1.11.1",
+    "expo-system-ui": "^2.9.3",
     "expo-task-manager": "^11.7.2",
     "react": "18.2.0",
     "react-native": "0.73.4",
