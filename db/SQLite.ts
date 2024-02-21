@@ -50,8 +50,8 @@ const getAlarms = async (): Promise<Alarm[]> => {
                     lonDelta: row.lonDelta,
                     rangeKm: row.rangeKm,
                   },
-                  isActive: row.isActive,
-                  isOneTime: row.isOneTime,
+                  isActive: row.isActive > 0,
+                  isOneTime: row.isOneTime > 0,
                 } as Alarm)
             )
           )
