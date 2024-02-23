@@ -59,13 +59,10 @@ const Home: React.FC<HomeProps> = ({ navigation, route }) => {
   }
 
   const handleAlarmDelete = (alarm: Alarm) => {
-    //setAlarms((prev) => {
     dbConnection
       .deleteAlarm(alarm)
       .then()
       .catch((error) => console.log(error))
-    //return prev.filter((a) => a.id !== alarm.id)
-    //})
   }
 
   return (

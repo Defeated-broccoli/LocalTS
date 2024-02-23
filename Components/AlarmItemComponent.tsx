@@ -33,11 +33,9 @@ const AlarmItemComponent = ({
 
   const handleRowEnded = () => {
     if (offsetValue > Dimensions.get('window').width / 2) {
-      console.log('edit')
       handleEditAlarm(alarm)
       swipeElement(0, 0)
     } else if (offsetValue < -Dimensions.get('window').width / 2) {
-      console.log('delete')
       swipeElement(-1000, 500)
       deleteElement()
       handleDeleteAlarm(alarm)
